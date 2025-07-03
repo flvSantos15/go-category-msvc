@@ -1,17 +1,16 @@
 package usecases
 
 import (
-	"log"
-
 	"github.com/flvSantos15/go-category-msvc/internal/entities"
+	"github.com/flvSantos15/go-category-msvc/internal/repositories"
 )
 
 type createCategoryUseCase struct {
-	// db
+	categoryRepository repositories.ICategoryRepository
 }
 
-func NewCreateCategoryUseCase() *createCategoryUseCase {
-	return &createCategoryUseCase{}
+func NewCreateCategoryUseCase(categoryRepository repositories.ICategoryRepository) *createCategoryUseCase {
+	return &createCategoryUseCase{categoryRepository}
 }
 
 func (usecase *createCategoryUseCase) Execute(name string) error {
@@ -20,8 +19,10 @@ func (usecase *createCategoryUseCase) Execute(name string) error {
 		return err
 	}
 
-	// save to db
-	log.Println(category)
+	err = usecase.categoryRepository.Save(category)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

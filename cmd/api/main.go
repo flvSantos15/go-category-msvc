@@ -1,6 +1,8 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
 	router := gin.Default() // gin.Default() returns a pointer to a new gin router
@@ -11,6 +13,8 @@ func main() {
 			"success": true,
 		})
 	})
+
+	CategoryRoutes(router)
 
 	// run the server
 	router.Run(":8080")
